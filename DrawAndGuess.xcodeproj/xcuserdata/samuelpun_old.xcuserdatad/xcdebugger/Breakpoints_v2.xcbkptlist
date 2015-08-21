@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Draw and Guess/GameScene.swift"
+            timestampString = "461824675.399977"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "GameScene"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Draw and Guess/GameViewController.swift"
+            timestampString = "461640444.020807"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "10"
+            endingLineNumber = "10">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Draw_and_Guess.GameViewController.init (Draw_and_Guess.GameViewController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;ObjectiveC.NSBundle&gt;) -&gt; Draw_and_Guess.GameViewController"
+                  moduleName = "Draw and Guess"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/samuelpun_old/Desktop/MyTestingFolder/Draw%20and%20Guess/Draw%20and%20Guess/GameViewController.swift"
+                  timestampString = "461503102.371892"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "57">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Draw_and_Guess.GameViewController.init (Draw_and_Guess.GameViewController.Type)(coder : ObjectiveC.NSCoder) -&gt; Swift.Optional&lt;Draw_and_Guess.GameViewController&gt;"
+                  moduleName = "Draw and Guess"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/samuelpun_old/Desktop/MyTestingFolder/Draw%20and%20Guess/Draw%20and%20Guess/GameViewController.swift"
+                  timestampString = "461503102.372154"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

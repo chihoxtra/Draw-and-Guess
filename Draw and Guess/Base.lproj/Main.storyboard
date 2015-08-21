@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Draw_and_Guess" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
+                        <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vbU-Ss-MlY">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="45" width="400" height="484"/>
+                                </variation>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pU3-Qu-ukV">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="black" image="black.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="black:" destination="BV1-FR-VrT" eventType="touchUpInside" id="wpW-ml-Zp4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OI0-dt-qkc">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="darkBlue" image="darkblue.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="darkBlue:" destination="BV1-FR-VrT" eventType="touchUpInside" id="8GG-RF-SgC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSo-fb-6Tc">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="blue" image="blue.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="71" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="blue:" destination="BV1-FR-VrT" eventType="touchUpInside" id="pJ9-LN-oMJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfA-AK-QYh">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="lightBlue" image="lightblue.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="111" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="lightBlue:" destination="BV1-FR-VrT" eventType="touchUpInside" id="a5c-7b-F8W"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnN-t6-4wl">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="darkGreen" image="darkgreen.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="146" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="darkGreen:" destination="BV1-FR-VrT" eventType="touchUpInside" id="2YE-h9-pIr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5b-DP-dQZ">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="green" image="green.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="182" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="green:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rJn-NT-ZCR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DsB-Vk-PeM">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="yellow" image="yellow.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="214" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="yellow:" destination="BV1-FR-VrT" eventType="touchUpInside" id="l4B-fz-CLm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wKZ-2E-CPx">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="orange" image="orange.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="249" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="orange:" destination="BV1-FR-VrT" eventType="touchUpInside" id="mPb-SR-x7Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksZ-cp-oZU">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="red" image="red.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="284" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="red:" destination="BV1-FR-VrT" eventType="touchUpInside" id="LQr-es-bfj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWh-S2-qfC">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="magenta" image="magenta.png"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="317" y="450" width="51" height="398"/>
+                                </variation>
+                                <connections>
+                                    <action selector="magenta:" destination="BV1-FR-VrT" eventType="touchUpInside" id="H4U-xE-wsl"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尼加拉瓜大瀑布" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ZE-52-UHM">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="4" y="6" width="128" height="21"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timerLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-kE-Vh6">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="182" y="0.0" width="92" height="27"/>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="vbU-Ss-MlY"/>
+                                <exclude reference="pU3-Qu-ukV"/>
+                                <exclude reference="OI0-dt-qkc"/>
+                                <exclude reference="NSo-fb-6Tc"/>
+                                <exclude reference="hfA-AK-QYh"/>
+                                <exclude reference="wnN-t6-4wl"/>
+                                <exclude reference="U5b-DP-dQZ"/>
+                                <exclude reference="DsB-Vk-PeM"/>
+                                <exclude reference="wKZ-2E-CPx"/>
+                                <exclude reference="ksZ-cp-oZU"/>
+                                <exclude reference="SWh-S2-qfC"/>
+                                <exclude reference="6ZE-52-UHM"/>
+                                <exclude reference="Pjd-kE-Vh6"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="vbU-Ss-MlY"/>
+                                <include reference="pU3-Qu-ukV"/>
+                                <include reference="OI0-dt-qkc"/>
+                                <include reference="NSo-fb-6Tc"/>
+                                <include reference="hfA-AK-QYh"/>
+                                <include reference="wnN-t6-4wl"/>
+                                <include reference="U5b-DP-dQZ"/>
+                                <include reference="DsB-Vk-PeM"/>
+                                <include reference="wKZ-2E-CPx"/>
+                                <include reference="ksZ-cp-oZU"/>
+                                <include reference="SWh-S2-qfC"/>
+                                <include reference="6ZE-52-UHM"/>
+                                <include reference="Pjd-kE-Vh6"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="black" destination="pU3-Qu-ukV" id="p5l-cB-nlh"/>
+                        <outlet property="keywordLabel" destination="6ZE-52-UHM" id="FkT-Em-5uz"/>
+                        <outlet property="mainImageView" destination="vbU-Ss-MlY" id="NW1-m1-dfO"/>
+                        <outlet property="timerLabel" destination="Pjd-kE-Vh6" id="kv1-Vx-ds0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="268.5" y="359.25"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="black.png" width="51" height="398"/>
+        <image name="blue.png" width="51" height="398"/>
+        <image name="darkblue.png" width="51" height="398"/>
+        <image name="darkgreen.png" width="51" height="398"/>
+        <image name="green.png" width="51" height="398"/>
+        <image name="lightblue.png" width="51" height="398"/>
+        <image name="magenta.png" width="51" height="398"/>
+        <image name="orange.png" width="51" height="398"/>
+        <image name="red.png" width="51" height="398"/>
+        <image name="yellow.png" width="51" height="398"/>
+    </resources>
+</document>
