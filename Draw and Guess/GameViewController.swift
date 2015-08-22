@@ -22,6 +22,18 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     var gcEnabled:Bool = false
     
     var defaultButtonVerticalPosition:CGFloat = 450.0
+
+    /*Game Center Related Settings*/
+    
+    var gMultiPlayerMode:Bool = false
+    
+    let gMatch:GKMatch = GKMatch()
+    let gMatchMaker:GKMatchmaker = GKMatchmaker()
+    let gInvite:GKInvite = GKInvite()
+    
+    let gMaxNumberOfPlayer = 6
+    
+    let gMinNumberOfPlayer = 2 /* for muliplayers */
     
 
 
@@ -84,18 +96,76 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         currentScene.changeBrushValueStringtoValue((button.titleLabel?.text)!)
     }
     
-    func authenticatePlayer() {
-        /* Game initial settings set up */
+    func dataPreparation() {
+        var d:NSData = NSData()
         
-        GKLocalPlayer.localPlayer().authenticateHandler = {( gameCenterVC, gameCenterError) -> Void in
+        
+        
+        
+    }
+    
+    func initiateMatch() {
+        let gMatchRequest:GKMatchRequest = GKMatchRequest()
+        
+        gMatchRequest.maxPlayers = gMaxNumberOfPlayer
+        gMatchRequest.minPlayers = gMinNumberOfPlayer
+        gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
+        
+        let gMatchView:GKMatchmakerViewController = GKMatchmakerViewController(matchRequest: gMatchRequest)!
+        
+        gMatchMaker.findMatchForRequest(gMatchRequest, withCompletionHandler: { (outGoingMatch , findMatchError) -> Void in
+            
+            if findMatchError != nil {
+                // error out
+                print("Game Center error: \(findMatchError)")
+            }
+            
+            if outGoingMatch != nil {
+                // success
+                print("invitation sent!")
+                
+                gMatch.sendData(<#T##data: NSData##NSData#>, toPlayers: <#T##[GKPlayer]#>, dataMode: <#T##GKMatchSendDataMode#>)
+            }
+        })
+
+
+    }
+ 
+    
+    func setupMatchHandler() {
+        /* This function handles invite as sent by other users */
+
+        
+        gMatchMaker.matchForInvite(gInvite , completionHandler: { (incomingMatch , gInviteErr) -> Void in
+            
+            if gInviteErr != nil {
+                // error out
+                print("Game Center error: \(gInviteErr)")
+            }
+            
+            if incomingMatch != nil {
+                // success
+                print("invitation received!")
+            }
+        })
+        
+    }
+    
+    func authenticatePlayer() {
+        /* Game initial settings set up as well as ask users to login to Game Center */
+        let localPlayer:GKLocalPlayer = GKLocalPlayer()
+        
+        localPlayer.authenticateHandler = {( gameCenterVC, gameCenterError) -> Void in
             if gameCenterVC != nil {
                 //showAuthenticationDialogWhenReasonable: is an example method name. Create your own method that displays an authentication view when appropriate for your app.
                 //showAuthenticationDialogWhenReasonable(gameCenterVC!)
+                
                 self.presentViewController(gameCenterVC!, animated: true, completion: { () -> Void in
                     // no idea
                 })
-            } else if GKLocalPlayer.localPlayer().authenticated == true {
+            } else if localPlayer.authenticated == true {
                 print("game center ok")
+                self.setupMatchHandler()
             } else  {
                 print("game center not ok")
             }
@@ -104,32 +174,17 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             { print("Game Center error: \(gameCenterError)")}
         }
     }
-    
-    func matchMaking() {
-        let gMatch:GKMatchmaker = GKMatchmaker()
-        let gInvite:GKInvite = GKInvite()
-        
-        gMatch.matchForInvite(gInvite , completionHandler: { (gMatch , gInviteErr) -> Void in
-            
-            if gInviteErr != nil {
-                // error out
-                print("Game Center error: \(gInviteErr)")
-            }
-            
-            if gMatch != nil {
-                // success   
-        
-            }
-        })
-        
-    }
+
     
     override func viewDidLoad() {
         /* viewDidLoad is a good place to create and initialize subviews you wish to add to your main view. It is also a good place to further customize your main view. It's also a good place to initialize data structures because any properties should have been set on the view controller by the time this is called. This typically only needs to be done once. */
         super.viewDidLoad()
         mainImageView.frame.size = self.view.frame.size
         
-        authenticatePlayer()
+        if gMultiPlayerMode {
+            print("multi")
+            authenticatePlayer()
+        }
 
     }
     

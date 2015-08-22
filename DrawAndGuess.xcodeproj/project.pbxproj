@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7E0651321B87613100635FA0 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651311B87613100635FA0 /* GameController.framework */; };
-		7E0651341B87613900635FA0 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651331B87613900635FA0 /* GameplayKit.framework */; };
+		7E0651321B87613100635FA0 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651311B87613100635FA0 /* GameController.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7E0651341B87613900635FA0 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651331B87613900635FA0 /* GameplayKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7E0A40FF1B807D32002F2CB4 /* ColorPalette.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0A40FE1B807D32002F2CB4 /* ColorPalette.png */; };
 		7E21330B1B86DB0400DA6659 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E21330A1B86DB0400DA6659 /* Default-568h@2x.png */; };
 		7E2A03391B86D3EB00C5531A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2A03381B86D3EB00C5531A /* GameKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -29,6 +29,9 @@
 		7EAF1FE81B8128E800C9CA92 /* magenta.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EAF1FDD1B8128E800C9CA92 /* magenta.png */; };
 		7EAF1FE91B8128E800C9CA92 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EAF1FDE1B8128E800C9CA92 /* red.png */; };
 		7EAF1FEB1B8129E900C9CA92 /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EAF1FEA1B8129E900C9CA92 /* yellow.png */; };
+		7EF2AB891B878DE600A8ADEB /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EF2AB871B878DE600A8ADEB /* greenButton.png */; };
+		7EF2AB8A1B878DE600A8ADEB /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EF2AB881B878DE600A8ADEB /* redButton.png */; };
+		7EF2AB8E1B8793BB00A8ADEB /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2AB8D1B8793BB00A8ADEB /* MainMenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,9 @@
 		7EAF1FDD1B8128E800C9CA92 /* magenta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magenta.png; sourceTree = "<group>"; };
 		7EAF1FDE1B8128E800C9CA92 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		7EAF1FEA1B8129E900C9CA92 /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
+		7EF2AB871B878DE600A8ADEB /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
+		7EF2AB881B878DE600A8ADEB /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
+		7EF2AB8D1B8793BB00A8ADEB /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +84,7 @@
 				7E0651331B87613900635FA0 /* GameplayKit.framework */,
 				7E0651311B87613100635FA0 /* GameController.framework */,
 				7E2A03381B86D3EB00C5531A /* GameKit.framework */,
-				7E83DFED1B79509B00586FDF /* Draw and Guess */,
+				7E83DFED1B79509B00586FDF /* DrawandGuess */,
 				7E83DFEC1B79509B00586FDF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,9 +97,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7E83DFED1B79509B00586FDF /* Draw and Guess */ = {
+		7E83DFED1B79509B00586FDF /* DrawandGuess */ = {
 			isa = PBXGroup;
 			children = (
+				7EF2AB8D1B8793BB00A8ADEB /* MainMenuViewController.swift */,
 				7E83DFEE1B79509B00586FDF /* AppDelegate.swift */,
 				7E83DFF01B79509B00586FDF /* GameScene.sks */,
 				7E83DFF21B79509B00586FDF /* GameScene.swift */,
@@ -114,7 +121,10 @@
 				7EAF1FDD1B8128E800C9CA92 /* magenta.png */,
 				7EAF1FDE1B8128E800C9CA92 /* red.png */,
 				7E21330A1B86DB0400DA6659 /* Default-568h@2x.png */,
+				7EF2AB871B878DE600A8ADEB /* greenButton.png */,
+				7EF2AB881B878DE600A8ADEB /* redButton.png */,
 			);
+			name = DrawandGuess;
 			path = "Draw and Guess";
 			sourceTree = "<group>";
 		};
@@ -190,7 +200,9 @@
 				7EAF1FE61B8128E800C9CA92 /* lightblue.png in Resources */,
 				7EAF1FE21B8128E800C9CA92 /* darkblue.png in Resources */,
 				7EAF1FEB1B8129E900C9CA92 /* yellow.png in Resources */,
+				7EF2AB891B878DE600A8ADEB /* greenButton.png in Resources */,
 				7EAF1FDF1B8128E800C9CA92 /* green.png in Resources */,
+				7EF2AB8A1B878DE600A8ADEB /* redButton.png in Resources */,
 				7EAF1FE71B8128E800C9CA92 /* pink.png in Resources */,
 				7EAF1FE41B8128E800C9CA92 /* blue.png in Resources */,
 				7EAF1FE31B8128E800C9CA92 /* darkgreen.png in Resources */,
@@ -207,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EF2AB8E1B8793BB00A8ADEB /* MainMenuViewController.swift in Sources */,
 				7E83DFF31B79509B00586FDF /* GameScene.swift in Sources */,
 				7E83DFF51B79509B00586FDF /* GameViewController.swift in Sources */,
 				7E83DFEF1B79509B00586FDF /* AppDelegate.swift in Sources */,
@@ -318,7 +331,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Draw and Guess/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "tv.wakawaka.Draw-and-Guess";
@@ -336,7 +349,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Draw and Guess/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "tv.wakawaka.Draw-and-Guess";
