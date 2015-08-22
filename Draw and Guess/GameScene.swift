@@ -7,6 +7,8 @@
 
 import SpriteKit
 import GameKit
+import GameController
+import GameplayKit
 
 class GameScene: SKScene {
     
@@ -81,37 +83,37 @@ class GameScene: SKScene {
 
     }
     
-    func keywordsPreparation() {
-        
-        // fetching external data and fill up dataItem Array
-        
-        let endpoint = NSURL(string: "http://chihoxtra.ddns.net/images/games/items.txt")
-        
-        let task = NSURLSession.sharedSession().dataTaskWithURL(endpoint!) {(rawdata, response, error) in
-            
-            let dataBuffer = NSString(data: rawdata!, encoding:NSUTF8StringEncoding) as String?
-            var dataWithoutEmptyContent = dataBuffer!.componentsSeparatedByString("\n")
-            
-            dataWithoutEmptyContent.removeAtIndex(dataWithoutEmptyContent.indexOf("")!)
-            
-            self.randomizeArray(dataWithoutEmptyContent)
-            var dataLine:[String] = self.resultArr
-            
-            
-            for i in 0 ... (dataLine.count - 1) {
-                if dataLine[i] != "" {
-                    
-                    var dataItem:[String] = dataLine[i].componentsSeparatedByString(",")
-                    
-                    self.itemsList.append(questions(picture: UIImage(named: (String(dataItem[0])))!, info: optionsAndAnswers(options: [String(dataItem[1]), String(dataItem[2])], answer: Int(dataItem[3])!)))
-                    
-                }
-            }
-        }
-        
-        task.resume()
-        
-    }
+//    func keywordsPreparation() {
+//        
+//        // fetching external data and fill up dataItem Array
+//        
+//        let endpoint = NSURL(string: "http://chihoxtra.ddns.net/images/games/items.txt")
+//        
+//        let task = NSURLSession.sharedSession().dataTaskWithURL(endpoint!) {(rawdata, response, error) in
+//            
+//            let dataBuffer = NSString(data: rawdata!, encoding:NSUTF8StringEncoding) as String?
+//            var dataWithoutEmptyContent = dataBuffer!.componentsSeparatedByString("\n")
+//            
+//            dataWithoutEmptyContent.removeAtIndex(dataWithoutEmptyContent.indexOf("")!)
+//            
+//            self.randomizeArray(dataWithoutEmptyContent)
+//            var dataLine:[String] = self.resultArr
+//            
+//            
+//            for i in 0 ... (dataLine.count - 1) {
+//                if dataLine[i] != "" {
+//                    
+//                    var dataItem:[String] = dataLine[i].componentsSeparatedByString(",")
+//                    
+//                    self.itemsList.append(questions(picture: UIImage(named: (String(dataItem[0])))!, info: optionsAndAnswers(options: [String(dataItem[1]), String(dataItem[2])], answer: Int(dataItem[3])!)))
+//                    
+//                }
+//            }
+//        }
+//        
+//        task.resume()
+//        
+//    }
     
     /* a temp array holding points created */
     var pointArray: [CGPoint] = [CGPoint(x: 0, y: 0)]

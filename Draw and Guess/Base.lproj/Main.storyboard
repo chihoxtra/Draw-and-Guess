@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="541-1e-UlK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="54U-Zw-Ntw">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
@@ -16,20 +16,6 @@
                     <view key="view" contentMode="scaleToFill" id="pj6-nf-4GE">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Sp-6o-O1H">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="多人玩噢" backgroundImage="greenButton.png">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="344" width="248" height="93"/>
-                                </variation>
-                                <connections>
-                                    <action selector="greenButton:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="6XM-pQ-vvd"/>
-                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showGameControllerMultiPlayer" id="u2s-uP-eTu"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tsM-F9-yi4">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
@@ -37,25 +23,39 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="180" width="248" height="93"/>
+                                    <rect key="frame" x="76" y="178" width="248" height="93"/>
                                 </variation>
                                 <connections>
                                     <action selector="redButton:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="gAB-pN-QKO"/>
-                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showGameController" id="Zpn-EF-ybQ"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showGameControllerSinglePlay" id="Zpn-EF-ybQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Sp-6o-O1H">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="多人玩噢" backgroundImage="greenButton.png">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="76" y="347" width="248" height="93"/>
+                                </variation>
+                                <connections>
+                                    <action selector="greenButton:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="6XM-pQ-vvd"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showGameControllerMultiPlayer" id="u2s-uP-eTu"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="9Sp-6o-O1H"/>
                                 <exclude reference="tsM-F9-yi4"/>
+                                <exclude reference="9Sp-6o-O1H"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="9Sp-6o-O1H"/>
                                 <include reference="tsM-F9-yi4"/>
+                                <include reference="9Sp-6o-O1H"/>
                             </mask>
                         </variation>
                     </view>
@@ -184,22 +184,23 @@
                                     <action selector="magenta:" destination="BV1-FR-VrT" eventType="touchUpInside" id="H4U-xE-wsl"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尼加拉瓜大瀑布" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ZE-52-UHM">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="4" y="6" width="128" height="21"/>
-                                </variation>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timerLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-kE-Vh6">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="182" y="0.0" width="92" height="27"/>
+                                    <rect key="frame" x="307" y="10" width="93" height="37"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尼加拉瓜大瀑布" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ZE-52-UHM">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="highlightedColor" red="0.25345937650686617" green="0.68031466261800866" blue="0.88222064393939392" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="shadowColor" red="0.2534593765" green="0.68031466259999995" blue="0.88222064389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="114" y="2" width="173" height="53"/>
                                 </variation>
                             </label>
                         </subviews>
@@ -216,8 +217,8 @@
                                 <exclude reference="wKZ-2E-CPx"/>
                                 <exclude reference="ksZ-cp-oZU"/>
                                 <exclude reference="SWh-S2-qfC"/>
-                                <exclude reference="6ZE-52-UHM"/>
                                 <exclude reference="Pjd-kE-Vh6"/>
+                                <exclude reference="6ZE-52-UHM"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -233,8 +234,8 @@
                                 <include reference="wKZ-2E-CPx"/>
                                 <include reference="ksZ-cp-oZU"/>
                                 <include reference="SWh-S2-qfC"/>
-                                <include reference="6ZE-52-UHM"/>
                                 <include reference="Pjd-kE-Vh6"/>
+                                <include reference="6ZE-52-UHM"/>
                             </mask>
                         </variation>
                     </view>
@@ -247,25 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1186.5" y="359.25"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="VHc-D6-7IA">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="541-1e-UlK" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VmS-pY-j4E">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="54U-Zw-Ntw" kind="relationship" relationship="rootViewController" id="ZB3-05-SIJ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZXy-dG-qVq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-471" y="388.5"/>
+            <point key="canvasLocation" x="1242" y="381.75"/>
         </scene>
     </scenes>
     <resources>
