@@ -23,6 +23,10 @@ class GameScene: SKScene {
     
     var gBrush:brush = brush(c: brushColorOption.black)
     
+    var randomizedKeywordsList:[String] = [String] ()
+    
+    let dataSourceLocation = "http://chihoxtra.ddns.net/games/DrawAndGuess/keywords.txt"
+    
     class brush {
         
         var colorOption: brushColorOption
@@ -83,37 +87,49 @@ class GameScene: SKScene {
 
     }
     
-//    func keywordsPreparation() {
-//        
-//        // fetching external data and fill up dataItem Array
-//        
-//        let endpoint = NSURL(string: "http://chihoxtra.ddns.net/images/games/items.txt")
-//        
-//        let task = NSURLSession.sharedSession().dataTaskWithURL(endpoint!) {(rawdata, response, error) in
-//            
-//            let dataBuffer = NSString(data: rawdata!, encoding:NSUTF8StringEncoding) as String?
-//            var dataWithoutEmptyContent = dataBuffer!.componentsSeparatedByString("\n")
-//            
-//            dataWithoutEmptyContent.removeAtIndex(dataWithoutEmptyContent.indexOf("")!)
-//            
-//            self.randomizeArray(dataWithoutEmptyContent)
-//            var dataLine:[String] = self.resultArr
-//            
-//            
-//            for i in 0 ... (dataLine.count - 1) {
-//                if dataLine[i] != "" {
-//                    
-//                    var dataItem:[String] = dataLine[i].componentsSeparatedByString(",")
-//                    
-//                    self.itemsList.append(questions(picture: UIImage(named: (String(dataItem[0])))!, info: optionsAndAnswers(options: [String(dataItem[1]), String(dataItem[2])], answer: Int(dataItem[3])!)))
-//                    
-//                }
-//            }
-//        }
-//        
-//        task.resume()
-//        
-//    }
+    func randomizeArray(var arr: [String]){
+        
+        if (arr.count > 0) {
+            let tmp:String  = arr.removeAtIndex(Int(arc4random_uniform(UInt32(arr.count))))
+            if tmp != "" {
+                randomizedKeywordsList.append(tmp)
+                randomizeArray(arr)
+            }
+            
+        }
+        
+    }
+    
+    func keywordsPreparation() {
+        
+        // fetching external data and fill up dataItem Array
+        
+        /* Updated plist to avoid temporally turn off erro */
+        let dataSource = NSURL(string: dataSourceLocation)
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(dataSource!) {(rawdata, response, error) in
+            
+            let dataBuffer = NSString(data: rawdata!, encoding:NSUTF8StringEncoding) as String?
+            var dataKeywordsList = dataBuffer!.componentsSeparatedByString("\n")
+            
+            dataKeywordsList.removeAtIndex(dataKeywordsList.indexOf("")!)
+            
+            self.randomizeArray(dataKeywordsList)
+            var dataLine:[String] = self.randomizedKeywordsList
+            
+            
+            for i in 0 ... (dataLine.count - 1) {
+                if dataLine[i] != "" {
+                    /* handle each line in of text in the file*/
+                    print(dataLine[i])
+                    
+                }
+            }
+        }
+        
+        task.resume()
+        
+    }
     
     /* a temp array holding points created */
     var pointArray: [CGPoint] = [CGPoint(x: 0, y: 0)]
@@ -187,6 +203,7 @@ class GameScene: SKScene {
         /* initilzing basics of apps */
         
 //        _ = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
+        keywordsPreparation()
     }
     
     
