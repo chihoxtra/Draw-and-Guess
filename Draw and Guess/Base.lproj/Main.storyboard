@@ -65,10 +65,10 @@
             </objects>
             <point key="canvasLocation" x="447" y="388.5"/>
         </scene>
-        <!--GameMainView-->
+        <!--DrawingView-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController title="GameMainView" id="BV1-FR-VrT" customClass="GameViewController" customModule="DrawAndGuess" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="GameMainView" id="BV1-FR-VrT" userLabel="DrawingView" customClass="GameViewController" customModule="DrawAndGuess" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
@@ -249,6 +249,83 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1242" y="381.75"/>
+        </scene>
+        <!--Guess View Controller-->
+        <scene sceneID="UY3-12-OJe">
+            <objects>
+                <viewController id="GwG-vg-arJ" customClass="GuessViewController" customModule="DrawAndGuess" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M0v-QP-QpC"/>
+                        <viewControllerLayoutGuide type="bottom" id="KQE-e1-5qe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bNn-9u-FNy">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb8-oN-aSP">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">player1: 尼加拉瓜大瀑布
+player2: 尼加拉瓜大瀑布
+player3: 尼加拉瓜大瀑布
+player4: 尼加拉瓜大瀑布</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="72" y="249" width="240" height="128"/>
+                                </variation>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="你的答案噢" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4gQ-Dz-TLH">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="72" y="397" width="167" height="30"/>
+                                </variation>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HK2-OV-rWz" userLabel="broadcastedImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="37" y="20" width="311" height="221"/>
+                                </variation>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nrk-4t-9cG">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="估！"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="275" y="396" width="46" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="sumitButton:" destination="GwG-vg-arJ" eventType="touchUpInside" id="oHt-dn-Xzv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Cb8-oN-aSP"/>
+                                <exclude reference="4gQ-Dz-TLH"/>
+                                <exclude reference="HK2-OV-rWz"/>
+                                <exclude reference="Nrk-4t-9cG"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Cb8-oN-aSP"/>
+                                <include reference="4gQ-Dz-TLH"/>
+                                <include reference="HK2-OV-rWz"/>
+                                <include reference="Nrk-4t-9cG"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="broadcastedImageView" destination="HK2-OV-rWz" id="1O9-XT-U9s"/>
+                        <outlet property="guessList" destination="Cb8-oN-aSP" id="9O5-ln-Vgb"/>
+                        <outlet property="myGuess" destination="4gQ-Dz-TLH" id="tlG-xa-VWS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6mQ-cF-Srl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1945.5" y="241.5"/>
         </scene>
     </scenes>
     <resources>

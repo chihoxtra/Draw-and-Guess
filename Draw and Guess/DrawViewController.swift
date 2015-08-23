@@ -13,8 +13,7 @@ import GameController
 import GameplayKit
 
 
-class GameViewController: UIViewController, GKGameCenterControllerDelegate {
-    
+class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate {
 
     var currentScene:GameScene = GameScene()
     var lastButtonClicked:UIButton = UIButton()
@@ -102,33 +101,36 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         
     }
     
-    func initiateMatch() {
+    func navigateToSecondView() {
+        let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SecondViewController") as! GameViewController
+        
+        self.navigationController!.pushViewController(secondViewController, animated: true)
+    }
+    
+    func createANewMatch() {
         let gMatchRequest:GKMatchRequest = GKMatchRequest()
         
         gMatchRequest.maxPlayers = gMaxNumberOfPlayer
         gMatchRequest.minPlayers = gMinNumberOfPlayer
         gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
         
-//        let GKMatchmakerViewController = GKMatchmakerViewController(matchRequest: gMatchRequest)!
+        let matchMakerViewController = GKMatchmakerViewController(matchRequest: gMatchRequest)
+        matchMakerViewController!.matchmakerDelegate = self
         
-        GKMatchmaker().findMatchForRequest(gMatchRequest, withCompletionHandler: { (outGoingMatch , findMatchError) -> Void in
-            
-            if findMatchError != nil {
-                // error out
-                print("Game Center error: \(findMatchError)")
-            }
-            
-            if outGoingMatch != nil {
-                // success
-                print("invitation sent!")
-                
-            }
-        })
+        matchMakerViewController?.hosted = false
+        
+        self.presentViewController(matchMakerViewController!, animated: true, completion: {() -> Void in
+            print("done in presenting view controller")
+            })
+        
     }
  
     
     func setupMatchHandler(invitation: GKInvite) {
         /* This function handles invite as sent by other users */
+        
+        let matchMakerViewController = GKMatchmakerViewController(invite: invitation)
+        matchMakerViewController!.matchmakerDelegate = self
         
         GKMatchmaker.sharedMatchmaker().matchForInvite(invitation, completionHandler: { invitedMatch, invitationError -> Void in
             
@@ -162,7 +164,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
                 print("game center ok")
                 
                 // self.setupMatchHandler(self.gInvite)
-                
+                self.createANewMatch()
             } else  {
                 print("game center not ok")
             }
@@ -176,6 +178,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     override func viewDidLoad() {
         /* viewDidLoad is a good place to create and initialize subviews you wish to add to your main view. It is also a good place to further customize your main view. It's also a good place to initialize data structures because any properties should have been set on the view controller by the time this is called. This typically only needs to be done once. */
         super.viewDidLoad()
+        
         mainImageView.frame.size = self.view.frame.size
         
         if gMultiPlayerMode {
@@ -237,11 +240,82 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         return true
     }
     
+//    func matchmakerViewController(viewController: GKMatchmakerViewController!,
+//        didFindHostedPlayers players: [AnyObject]!) {
+//            
+//    }
+    
+    
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
-
-
+    
+    func matchmakerViewController(viewController: GKMatchmakerViewController,
+        didFailWithError error: NSError) {
+    }
+    
+    func matchmakerViewControllerWasCancelled(viewController: GKMatchmakerViewController) {
+    }
+    
+    func matchmakerViewController(viewController: GKMatchmakerViewController,
+        hostedPlayerDidAccept player: GKPlayer) {
+    }
+    
+    
+//    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFindMatch match: GKMatch!) {
+//        
+//        print("match found")
+//        
+//        var goToMatch = GamePlay(size: self.size)
+//        var transitionToMatch = SKTransition.fadeWithDuration(1.0)
+//        goToMatch.scaleMode = SKSceneScaleMode.AspectFill
+//        self.scene!.view?.presentScene(goToMatch, transition: transitionToMatch)
+//        
+//        presentingViewController = viewController
+//        self.presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+//        
+//        self.match = match
+//        self.match.delegate = self
+//        
+//        self.lookupPlayers()
+//    }
+//    
+//    
+//    func matchmakerViewController(viewController: GKMatchmakerViewController!, didReceiveAcceptFromHostedPlayer playerID: String!) {
+//        
+//    }
+//    
+//    
+//    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFindPlayers playerIDs: [AnyObject]!) {
+//        
+//    }
+//    
+//    
+//    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFailWithError error: NSError!) {
+//        
+//        presentingViewController = viewController
+//        self.presentingViewController.dismissViewControllerAnimated(true, completion: nil);
+//        println("Error finding match: \(error.localizedDescription)");
+//        
+//    }
+//    
+//    
+//    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFindHostedPlayers players: [AnyObject]!) {
+//        
+//    }
+//    
+//    
+//    
+//    func matchmakerViewControllerWasCancelled(viewController: GKMatchmakerViewController!) {
+//        
+//        println("go back to main menu")
+//        
+//        presentingViewController = viewController
+//        self.presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+//        
+//        
+//        
+//    }
     
     
 }

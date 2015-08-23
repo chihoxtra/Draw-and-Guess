@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Draw and Guess/GameScene.swift"
-            timestampString = "461938577.756677"
+            timestampString = "461939490.383307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "GameScene"
             landmarkType = "3">
          </BreakpointContent>
