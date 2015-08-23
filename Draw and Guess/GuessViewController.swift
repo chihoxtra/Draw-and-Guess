@@ -21,9 +21,24 @@ class GuessViewController: UIViewController {
     
     @IBOutlet var broadcastedImageView: UIImageView!
     
+    func getCurrentTimeStamp() -> String {
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.componentsInTimeZone(NSTimeZone.localTimeZone(), fromDate: date)
+        return (String(Int(components.hour)%12) + ":" + String(components.minute) + ":" + String(components.second))
+    }
+    
     func submitNewGuess(ans: String) {
         if ans != "" {
-            guessList.text = guessList.text + "\n" + ans
+            
+            guessList.text = guessList.text + "\n" + getCurrentTimeStamp() + ":" + ans
+            
+            let range:NSRange = NSMakeRange(guessList.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) - 1, 1)
+            guessList.scrollRangeToVisible(range)
+            print(range)
+            
+            myGuess.text = ""
+
         }
     }
     

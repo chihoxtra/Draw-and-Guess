@@ -139,7 +139,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
 //        let matchMakerViewController = GKMatchmakerViewController(invite: invitation)
 //        matchMakerViewController!.matchmakerDelegate = self
         
-        let gMatchMaker = GKMatchmaker()
+//        let gMatchMaker = GKMatchmaker()
         
 //        gMatchMaker.matchForInvite(invitation, completionHandler: { invitedMatch, invitationError -> Void in
 //            
