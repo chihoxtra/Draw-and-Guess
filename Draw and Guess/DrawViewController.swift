@@ -13,7 +13,7 @@ import GameController
 import GameplayKit
 
 
-class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate {
+class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKLocalPlayerListener, GKInviteEventListener {
 
     var currentScene:GameScene = GameScene()
     var lastButtonClicked:UIButton = UIButton()
@@ -94,6 +94,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
     }
     
     func dataPreparation() {
+        let gMatchMaker = GKMatchmaker()
+        
 //        var d:NSData = NSData()
         
         
@@ -101,11 +103,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
         
     }
     
-    func navigateToSecondView() {
-        let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SecondViewController") as! GameViewController
-        
-        self.navigationController!.pushViewController(secondViewController, animated: true)
-    }
     
     func createANewMatch() {
         let gMatchRequest:GKMatchRequest = GKMatchRequest()
@@ -131,30 +128,35 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
             })
         
     }
- 
     
-    func setupMatchHandler() {
-        /* This function handles invite as sent by other users */
-        
-//        let matchMakerViewController = GKMatchmakerViewController(invite: invitation)
-//        matchMakerViewController!.matchmakerDelegate = self
-        
-//        let gMatchMaker = GKMatchmaker()
-        
-//        gMatchMaker.matchForInvite(invitation, completionHandler: { invitedMatch, invitationError -> Void in
-//            
-//            if invitationError != nil {
-//                // error out
-//                print("Game Center error: \(invitationError)")
-//            }
-//            
-//            if invitedMatch != nil {
-//                // success
-//                print("invitation received!")
-//            }
-//        })
-
+    
+    func player(player: GKPlayer, didRequestMatchWithPlayers playerIDsToInvite: [String]) {
+        print("Did request matchmaking")
     }
+
+
+    
+    func player(player: GKPlayer, didAcceptInvite invite: GKInvite) {
+        
+        GKMatchmaker.sharedMatchmaker().matchForInvite (invite, completionHandler: {(InvitedMatch, error) in
+            print("received and invite")
+            if InvitedMatch != nil {
+
+                
+                
+            }
+        })
+    }
+
+    func matchForInvite(receivedInvite: GKInvite!,  completionHandler: ((GKMatch!, NSError!) -> Void)!) {
+        print("received and invite")
+        if receivedInvite != nil {
+            
+            
+            
+        }
+    }
+    
     
     func authenticatePlayer() {
         /* Game initial settings set up as well as ask users to login to Game Center */
@@ -171,9 +173,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
                 })
             } else if GKLocalPlayer.localPlayer().authenticated == true {
                 print("game center ok")
-                
-                self.setupMatchHandler()
+                GKLocalPlayer.localPlayer().registerListener(self)
+                // self.setupMatchHandler()
                 self.createANewMatch()
+                self.player(GKLocalPlayer.localPlayer(), didRequestMatchWithPlayers: ["samuelpun@yahoo.com.hk"])
             } else  {
                 print("game center not ok")
             }
@@ -189,11 +192,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
         super.viewDidLoad()
         
         mainImageView.frame.size = self.view.frame.size
-        
-        if gMultiPlayerMode {
-            print("mutiplayer mode on")
-            authenticatePlayer()
-        }
 
     }
     
@@ -202,6 +200,11 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
         if gGameStarted == false {
             gGameStarted = true
             super.viewWillLayoutSubviews()
+            
+            if gMultiPlayerMode {
+                print("mutiplayer mode on")
+                authenticatePlayer()
+            }
             
             if let scene = GameScene(fileNamed:"GameScene") {
                 // Configure the view.
@@ -253,6 +256,19 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
 //        didFindHostedPlayers players: [AnyObject]!) {
 //            
 //    }
+    
+    func player(player: GKPlayer, didReceiveChallenge challenge: GKChallenge) {
+        
+    }
+    
+    func player(player: GKPlayer, wantsToPlayChallenge challenge: GKChallenge) {
+        
+    }
+    
+    func player(player: GKPlayer, didRequestMatchWithRecipients recipientPlayers: [GKPlayer]) {
+        print("request sent")
+    }
+    
     
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
