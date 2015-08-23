@@ -9,6 +9,8 @@
 import UIKit
 
 class GuessViewController: UIViewController {
+    
+    var gCurrentCorrectAns = ""
 
     @IBOutlet var myGuess: UITextField!
     

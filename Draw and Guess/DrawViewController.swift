@@ -113,6 +113,13 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
         gMatchRequest.maxPlayers = gMaxNumberOfPlayer
         gMatchRequest.minPlayers = gMinNumberOfPlayer
         gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
+        gMatchRequest.recipientResponseHandler = {(playerID, response) -> Void in
+            if response == GKInviteeResponse.InviteeResponseAccepted {
+                print(String(playerID) + "accepted the invitation")
+            }
+
+        }
+        
         
         let matchMakerViewController = GKMatchmakerViewController(matchRequest: gMatchRequest)
         matchMakerViewController!.matchmakerDelegate = self
@@ -126,24 +133,26 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
     }
  
     
-    func setupMatchHandler(invitation: GKInvite) {
+    func setupMatchHandler() {
         /* This function handles invite as sent by other users */
         
-        let matchMakerViewController = GKMatchmakerViewController(invite: invitation)
-        matchMakerViewController!.matchmakerDelegate = self
+//        let matchMakerViewController = GKMatchmakerViewController(invite: invitation)
+//        matchMakerViewController!.matchmakerDelegate = self
         
-        GKMatchmaker.sharedMatchmaker().matchForInvite(invitation, completionHandler: { invitedMatch, invitationError -> Void in
-            
-            if invitationError != nil {
-                // error out
-                print("Game Center error: \(invitationError)")
-            }
-            
-            if invitedMatch != nil {
-                // success
-                print("invitation received!")
-            }
-        })
+        let gMatchMaker = GKMatchmaker()
+        
+//        gMatchMaker.matchForInvite(invitation, completionHandler: { invitedMatch, invitationError -> Void in
+//            
+//            if invitationError != nil {
+//                // error out
+//                print("Game Center error: \(invitationError)")
+//            }
+//            
+//            if invitedMatch != nil {
+//                // success
+//                print("invitation received!")
+//            }
+//        })
 
     }
     
@@ -163,7 +172,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
             } else if GKLocalPlayer.localPlayer().authenticated == true {
                 print("game center ok")
                 
-                // self.setupMatchHandler(self.gInvite)
+                self.setupMatchHandler()
                 self.createANewMatch()
             } else  {
                 print("game center not ok")

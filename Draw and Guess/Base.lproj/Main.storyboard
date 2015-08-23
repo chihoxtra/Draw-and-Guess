@@ -27,7 +27,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="redButton:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="gAB-pN-QKO"/>
-                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showGameControllerSinglePlay" id="Zpn-EF-ybQ"/>
+                                    <segue destination="GwG-vg-arJ" kind="show" identifier="showGuessControllerMultiPlayer" id="2HO-6a-1IE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Sp-6o-O1H">
@@ -41,7 +41,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="greenButton:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="6XM-pQ-vvd"/>
-                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showGameControllerMultiPlayer" id="u2s-uP-eTu"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showDrawControllerMultiPlayer" id="u2s-uP-eTu"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -261,17 +261,17 @@
                     <view key="view" contentMode="scaleToFill" id="bNn-9u-FNy">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb8-oN-aSP">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cb8-oN-aSP">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">player1: 尼加拉瓜大瀑布
 player2: 尼加拉瓜大瀑布
 player3: 尼加拉瓜大瀑布
 player4: 尼加拉瓜大瀑布</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="72" y="249" width="240" height="128"/>
+                                    <rect key="frame" x="37" y="249" width="311" height="154"/>
                                 </variation>
                             </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="你的答案噢" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4gQ-Dz-TLH">
@@ -279,7 +279,7 @@ player4: 尼加拉瓜大瀑布</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="72" y="397" width="167" height="30"/>
+                                    <rect key="frame" x="53" y="423" width="167" height="30"/>
                                 </variation>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HK2-OV-rWz" userLabel="broadcastedImageView">
@@ -292,7 +292,7 @@ player4: 尼加拉瓜大瀑布</string>
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="估！"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="396" width="46" height="30"/>
+                                    <rect key="frame" x="280" y="422" width="46" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="sumitButton:" destination="GwG-vg-arJ" eventType="touchUpInside" id="oHt-dn-Xzv"/>
@@ -342,7 +342,4 @@ player4: 尼加拉瓜大瀑布</string>
         <image name="redButton.png" width="300" height="96"/>
         <image name="yellow.png" width="51" height="398"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="u2s-uP-eTu"/>
-    </inferredMetricsTieBreakers>
 </document>

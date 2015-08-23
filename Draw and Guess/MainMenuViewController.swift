@@ -17,11 +17,16 @@ class MainMenuViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let finalViewController = segue.destinationViewController as! GameViewController;
-        if (segue.identifier == "showGameControllerMultiPlayer") {
+
+        if (segue.identifier == "showDrawControllerMultiPlayer") {
+            
             //Checking identifier is crucial as there might be multiple
             // segues attached to same view
+            
+            let finalViewController = segue.destinationViewController as! GameViewController;
             finalViewController.gMultiPlayerMode = true
+        } else if (segue.identifier == "showGuessControllerMultiPlayer") {
+            _ = segue.destinationViewController as! GuessViewController;
         }
     }
     
