@@ -107,29 +107,29 @@ class GameScene: SKScene {
         /* Updated plist to avoid temporally turn off erro */
         let dataSource = NSURL(string: dataSourceLocation)
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(dataSource!) {(rawdata, response, error) in
+        let task = NSURLSession.sharedSession().dataTaskWithURL(dataSource!) {(rawdata, response, connectionError) in
             
-            let dataBuffer = NSString(data: rawdata!, encoding:NSUTF8StringEncoding) as String?
-            var dataKeywordsList = dataBuffer!.componentsSeparatedByString("\n")
+            if connectionError == nil {
+                let dataBuffer = NSString(data: rawdata!, encoding:NSUTF8StringEncoding) as String?
+                var dataKeywordsList = dataBuffer!.componentsSeparatedByString("\n")
             
-            dataKeywordsList.removeAtIndex(dataKeywordsList.indexOf("")!)
+                dataKeywordsList.removeAtIndex(dataKeywordsList.indexOf("")!)
             
-            self.randomizeArray(dataKeywordsList)
-            var dataLine:[String] = self.randomizedKeywordsList
+                self.randomizeArray(dataKeywordsList)
+                var dataLine:[String] = self.randomizedKeywordsList
             
-            
-            for i in 0 ... (dataLine.count - 1) {
-                if dataLine[i] != "" {
-                    /* handle each line in of text in the file*/
-                    print(dataLine[i])
+                for i in 0 ... (dataLine.count - 1) {
+                    if dataLine[i] != "" {
+                        /* handle each line in of text in the file*/
+                        print(dataLine[i])
                     
+                    }
                 }
             }
         }
-        
         task.resume()
-        
     }
+    
     
     /* a temp array holding points created */
     var pointArray: [CGPoint] = [CGPoint(x: 0, y: 0)]

@@ -28,6 +28,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
     
     var gMultiPlayerMode:Bool = false
     
+    var playerIsAuthenticated = false
+    
     let gMaxNumberOfPlayer = 6
     
     let gMinNumberOfPlayer = 2 /* for muliplayers */
@@ -93,30 +95,29 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
         currentScene.changeBrushValueStringtoValue((button.titleLabel?.text)!)
     }
     
+    
     func dataPreparation() {
-        let gMatchMaker = GKMatchmaker()
+//        let gMatchMaker = GKMatchmaker()
         
 //        var d:NSData = NSData()
-        
-        
-        
-        
+ 
     }
     
     
     func createANewMatch() {
+        /* user take the initiation to invite other players to play*/
+        
         let gMatchRequest:GKMatchRequest = GKMatchRequest()
         
         gMatchRequest.maxPlayers = gMaxNumberOfPlayer
         gMatchRequest.minPlayers = gMinNumberOfPlayer
-        gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
+        gMatchRequest.inviteMessage = String(GKLocalPlayer.localPlayer().playerID) + "Let's Play Draw and Guess la 哇卡！"
         gMatchRequest.recipientResponseHandler = {(playerID, response) -> Void in
             if response == GKInviteeResponse.InviteeResponseAccepted {
-                print(String(playerID) + "accepted the invitation")
+                print(String(playerID) + "aaccepted my request sent")
             }
 
         }
-        
         
         let matchMakerViewController = GKMatchmakerViewController(matchRequest: gMatchRequest)
         matchMakerViewController!.matchmakerDelegate = self
@@ -130,23 +131,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
     }
     
     
-    func player(player: GKPlayer, didRequestMatchWithPlayers playerIDsToInvite: [String]) {
-        print("Did request matchmaking")
-    }
 
-
-    
-    func player(player: GKPlayer, didAcceptInvite invite: GKInvite) {
-        
-        GKMatchmaker.sharedMatchmaker().matchForInvite (invite, completionHandler: {(InvitedMatch, error) in
-            print("received and invite")
-            if InvitedMatch != nil {
-
-                
-                
-            }
-        })
-    }
 
     func matchForInvite(receivedInvite: GKInvite!,  completionHandler: ((GKMatch!, NSError!) -> Void)!) {
         print("received and invite")
@@ -157,11 +142,30 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
         }
     }
     
+    func player(player: GKPlayer, didRequestMatchWithPlayers playerIDsToInvite: [String]) {
+        print("Did request matchmaking")
+    }
+    
+    
+    /*protocol for implementing listener: when user accept invitation from others*/
+    func player(player: GKPlayer, didAcceptInvite invite: GKInvite) {
+        
+        print("did received and accepted an invite")
+        GKMatchmaker.sharedMatchmaker().matchForInvite (invite, completionHandler: {(InvitedMatch, error) in
+            
+            if InvitedMatch != nil {
+                
+                
+                
+            }
+        })
+    }
+    
     
     func authenticatePlayer() {
         /* Game initial settings set up as well as ask users to login to Game Center */
         
-        /*GKLocalPlayer Singleton */
+        /*GKLocalPlayer Singleton handler implementation*/
         GKLocalPlayer.localPlayer().authenticateHandler = {( gameCenterVC, gameCenterError) -> Void in
             
             if gameCenterVC != nil {
@@ -169,18 +173,27 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKMa
                 //showAuthenticationDialogWhenReasonable(gameCenterVC!)
                 
                 self.presentViewController(gameCenterVC!, animated: true, completion: { () -> Void in
-                    // no idea
+                    /* present game login screen to users*/
                 })
-            } else if GKLocalPlayer.localPlayer().authenticated == true {
-                print("game center ok")
+            } else if GKLocalPlayer.localPlayer().authenticated == true && self.playerIsAuthenticated == false {
+                print("game center authentication ok")
+                
+                self.playerIsAuthenticated = true
+                
+                /* register invitation listener*/
+                GKLocalPlayer.localPlayer().unregisterAllListeners()
                 GKLocalPlayer.localPlayer().registerListener(self)
-                // self.setupMatchHandler()
+                
+                /* take action to creat a new match for user */
                 self.createANewMatch()
-                self.player(GKLocalPlayer.localPlayer(), didRequestMatchWithPlayers: ["samuelpun@yahoo.com.hk"])
+                // self.player(GKLocalPlayer.localPlayer(), didRequestMatchWithPlayers: ["G:17880138"])
+                print("Current ID is " + String(GKLocalPlayer.localPlayer().playerID))
             } else  {
-                print("game center not ok")
+                self.playerIsAuthenticated = false
+                print("cannot authenticate user 怎麼辦")
             }
             if gameCenterError != nil {
+                /*there is an error from game center*/
                 print("Game Center error: \(gameCenterError)")
             }
         }
