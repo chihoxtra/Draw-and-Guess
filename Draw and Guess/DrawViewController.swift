@@ -13,7 +13,7 @@ import GameController
 import GameplayKit
 
 
-class GameViewController: UIViewController, GKLocalPlayerListener, GKInviteEventListener {
+class GameViewController: UIViewController {
 
     var currentScene:GameScene = GameScene()
     var lastButtonClicked:UIButton = UIButton()
