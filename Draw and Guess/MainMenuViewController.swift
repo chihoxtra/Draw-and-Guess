@@ -18,7 +18,7 @@ Do not implement GKInviteEventListener directly, instead use GKLocalPlayerListen
 
 */
 
-class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKLocalPlayerListener, GKMatchDelegate  {
+class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKLocalPlayerListener, GKInviteEventListener, GKMatchDelegate  {
 
     var mainMenuAlreadyLoadedOnce = false
 
@@ -36,7 +36,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     let gMinNumberOfPlayer = 1 /* for muliplayers */
     
-    let gDefaultNumberOfPlayer = 2 /* for muliplayers */
+    let gDefaultNumberOfPlayer = 1 /* for muliplayers */
     
     let gUseGameCenter = true
     
@@ -94,6 +94,11 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
         }
     }
     
+    func debug(str: String) {
+        print("DEBUG: " + str)
+        statusLabel.text = str
+    }
+    
     /************************** STEP 1: PLAYER AUTHENTICATION ****************************/
                                         /* AND */
     /************************** STEP 3: RETRIEVE  LIST OF FRIENDS ************************/
@@ -113,14 +118,15 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 
                 self.presentViewController(gameCenterVC!, animated: true, completion: { () -> Void in
                     /* present game login screen to users*/
-                    print("DEBUG: No login cookie, prompt user to login")
+                    self.debug("DEBUG: No login cookie, prompt user to login")
                 })
             } else if GKLocalPlayer.localPlayer().authenticated == true && self.playerIsAuthenticated == false {
 
                     /* authenticated once and is authenticated and prepare GKLocalPlayer.localPlayer() object*/
-                    print("DEBUG: game center authentication ok" + String(GKLocalPlayer.localPlayer().playerID))
+                    self.debug("DEBUG: game center authentication ok" + String(GKLocalPlayer.localPlayer().playerID))
                 
-//                    self.setUpInviteHandler()
+                    /* attempt to set up event handler*/
+                    // self.setUpInviteHandler()
                 
                     self.playerIsAuthenticated = true
                 
@@ -137,11 +143,11 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                     if playerlist != nil {
                         for player in playerlist! {
                             self.gFriendsPlayerList.append(player)
-                            print("DEBUG: player's friend retrieved: " + String(player))
+                            self.debug("DEBUG: player's friend retrieved: " + String(player))
                         }
                     }
                     if err != nil {
-                        print("DEBUG: Game Center error: \(err)")
+                        self.debug("DEBUG: Game Center error: \(err)")
                     }
                 })
                 
@@ -153,12 +159,12 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
             } else  {
                 /* cannot authenticate local user*/
                 self.playerIsAuthenticated = false
-                print("DEBUG: cannot authenticate user 怎麼辦")
+                self.debug("DEBUG: cannot authenticate user 怎麼辦")
             }
             if gameCenterError != nil {
                 /*there is an error from game center*/
                 self.playerIsAuthenticated = false
-                print("DEBUG: Game Center error: \(gameCenterError)")
+                self.debug("DEBUG: Game Center error: \(gameCenterError)")
             }
         }
     }
@@ -169,7 +175,6 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     
     func createAndSendMatchRequest() {
-        print("create match")
         
         if playerIsAuthenticated == true {
             let gMatchRequest:GKMatchRequest = GKMatchRequest()
@@ -177,13 +182,11 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
             gMatchRequest.maxPlayers = gMaxNumberOfPlayer
             gMatchRequest.minPlayers = gMinNumberOfPlayer
             gMatchRequest.defaultNumberOfPlayers = gDefaultNumberOfPlayer
-            gMatchRequest.playerAttributes = 0 ; // NO SPECIAL ATTRIBS
-            gMatchRequest.playerGroup = 0
             gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
             gMatchRequest.recipients = gFriendsPlayerList
             gMatchRequest.recipientResponseHandler = { (playerID, response) -> Void in
                 if response ==  GKInviteRecipientResponse.InviteeResponseAccepted {
-                    print("DEBUG: match sent accepted")
+                    self.debug("DEBUG: match sent accepted")
                     self.startMatch()
                 }
             }
@@ -197,20 +200,21 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 matchMakerViewController.hosted = false
                 matchMakerViewController.matchmakerDelegate = self  /*to followup on the response from other players unpon receiving my invitations sent*/
                 
+                
                 self.presentViewController(matchMakerViewController, animated: true, completion: {() -> Void in
-                    print("DEBUG: Standard Match Maker VC presented")
+                    self.debug("DEBUG: Standard Match Maker VC presented")
                 })
             } else if gMultiplayerStatus == .programmeToCreateMatch {
                 /* option 2 programmatically find match */
                 
-                print("DEBUG: attempt to create match programmatically")
+                self.debug("DEBUG: attempt to create match programmatically")
                 GKMatchmaker.sharedMatchmaker().findMatchForRequest(gMatchRequest, withCompletionHandler: { (match, error) -> Void in
                     if !(error != nil) {
-                        print("DEBUG: There is an error" + String(error))
+                        self.debug("DEBUG: There is an error" + String(error))
                     } else if match != nil {
                         /* Match created now add more players */
 
-                        print("DEBUG: Match created la!")
+                        self.debug("DEBUG: Match created la!")
                         GKMatchmaker.sharedMatchmaker().addPlayersToMatch(match!, matchRequest: gMatchRequest, completionHandler: {(err) -> Void in
                         })
 
@@ -225,13 +229,13 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 
                 GKMatchmaker.sharedMatchmaker().findMatchForRequest(gMatchRequest, withCompletionHandler: { (match, error) -> Void in
                     if !(error != nil) {
-                        print("DEBUG: There is an error" + String(error))
+                        self.debug("DEBUG: There is an error" + String(error))
                     } else if match != nil {
                         
-                        print("DEBUG: Match created la!")
+                        self.debug("DEBUG: Match created la!")
                     }
                 })
-                print("DEBUG: send Invite with specific ID")
+                self.debug("DEBUG: send Invite with specific ID")
                 
             }
         }
@@ -244,10 +248,8 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
 
 //    func setUpInviteHandler() {
 //        
-//        GKMatchmaker.sharedMatchmaker().matchForInvite(GKInvite, completionHandler: { match, error -> Void in
-//            if invite.playerAttributes != 0 {
-//                print(invite.playerAttributes)
-//            }
+//        GKMatchmaker.sharedMatchmaker().matchForInvite(GKInvite(), completionHandler: { match, error -> Void in
+//            self.debug("Invite received")
 //        })
 //
 //    }
@@ -257,16 +259,6 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     /************************  RANDOM MATCH ****************************/
     
-    // send request out and search
-//    func findMatchForRequest(request: GKMatchRequest!, withCompletionHandler completionHandler: ((GKMatch!, NSError!) -> Void)!) {
-//        print("DEBUG: MATCH: request created and sent")
-//        self.statusLabel.text = "Match request sent"
-//
-//    }
-    
-    func addPlayersToMatch(match: GKMatch!, matchRequest: GKMatchRequest!, completionHandler: ((NSError!) -> Void)!) {
-        
-    }
     
     func finishMatchmakingForMatch(match: GKMatch!) {
         /*
@@ -281,37 +273,67 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     /*protocol for implementing listener: when user accept invitation from others*/
     func player(player: GKPlayer, didAcceptInvite invite: GKInvite) {
-        print("did received and accepted an invite" + String(player.playerID))
+        self.debug("did received and accepted an invite" + String(player.playerID))
         
-        /*If user is receving invite*/
-        let matchMakerViewController = GKMatchmakerViewController(invite: invite)!
-        
-        matchMakerViewController.hosted = false
-        matchMakerViewController.matchmakerDelegate = self  /*to followup on the response from other players unpon resceiving my invitations sent*/
-        
-        self.presentViewController(matchMakerViewController, animated: true, completion: {() -> Void in
-            print("Match Maker VC presented")
+        GKMatchmaker.sharedMatchmaker().matchForInvite(invite, completionHandler: { match, error -> Void in
+            self.debug("Invite received")
+
+            let alert = UIAlertController(title: "Game Invitation", message: "Message", preferredStyle: UIAlertControllerStyle.Alert)
+            let alertAction1 = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+            let alertAction2 = UIAlertAction(title: "No la", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+            alert.addAction(alertAction1)
+            alert.addAction(alertAction2)
+            self.presentViewController(alert, animated: true) { () -> Void in }
+            
         })
+        
+
     }
     
     
     
-//    func player(player: GKPlayer, didRequestMatchWithRecipients playerIDsToInvite: [GKPlayer]) {
-//        print("DEBUG: send Invite with specific ID")
-//        
-//        let gMatchRequest:GKMatchRequest = GKMatchRequest()
-//        
-//        gMatchRequest.maxPlayers = gMaxNumberOfPlayer
-//        gMatchRequest.minPlayers = gMinNumberOfPlayer
-//        gMatchRequest.defaultNumberOfPlayers = gDefaultNumberOfPlayer
-//        gMatchRequest.playerAttributes = 0 ; // NO SPECIAL ATTRIBS
-//        gMatchRequest.playerGroup = 0
-//        gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
-//        gMatchRequest.recipients = playerIDsToInvite
-//        
-//
-//    
+    func player(player: GKPlayer, didRequestMatchWithRecipients playerIDsToInvite: [GKPlayer]) {
+        print("DEBUG: player send Invite with specific ID")
+        
+        let gMatchRequest:GKMatchRequest = GKMatchRequest()
+        
+        gMatchRequest.maxPlayers = gMaxNumberOfPlayer
+        gMatchRequest.minPlayers = gMinNumberOfPlayer
+        gMatchRequest.defaultNumberOfPlayers = gDefaultNumberOfPlayer
+        gMatchRequest.playerAttributes = 0 ; // NO SPECIAL ATTRIBS
+        gMatchRequest.playerGroup = 0
+        gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
+        gMatchRequest.recipients = playerIDsToInvite
+        
+
+    
+    }
+    
+    /********************* For MatchmakerController Delegate ***************************/
+    
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.debug("DEBUG: game center interaction is done")
+    }
+    /* * */
+    
+    func matchmakerViewController(viewController: GKMatchmakerViewController,
+        didFailWithError error: NSError) {
+            self.debug("matchmakerViewController")
+    }
+    
+//    func matchmakerViewController(_ viewController: GKMatchmakerViewController!,
+//        didFindPlayers playerIDs: [AnyObject]!) {
 //    }
+    
+    func matchmakerViewControllerWasCancelled(viewController: GKMatchmakerViewController) {
+        viewController.dismissViewControllerAnimated(true, completion: {() -> Void in
+            self.debug("matchmakerViewController closed as user cancelled it")
+        })
+    }
+    
+
+    
     
     func startMatch() {
         
@@ -389,26 +411,9 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
         
     }
 
+
     
-    
-    /* Implementation for Game Center delegate */
-    
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
-        print("DEBUG: game center interaction is done")
-    }
-    /* * */
-    
-    func matchmakerViewController(viewController: GKMatchmakerViewController,
-        didFailWithError error: NSError) {
-            print("matchmakerViewController")
-    }
-    
-    func matchmakerViewControllerWasCancelled(viewController: GKMatchmakerViewController) {
-        viewController.dismissViewControllerAnimated(true, completion: {() -> Void in
-            print("matchmakerViewController closed as user cancelled it")
-        })
-    }
+
     
 
 }
