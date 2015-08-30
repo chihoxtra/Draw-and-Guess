@@ -18,7 +18,7 @@ Do not implement GKInviteEventListener directly, instead use GKLocalPlayerListen
 
 */
 
-class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKLocalPlayerListener, GKInviteEventListener, GKMatchDelegate  {
+class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKLocalPlayerListener, GKMatchDelegate  {
 
     var mainMenuAlreadyLoadedOnce = false
 
@@ -34,15 +34,15 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     let gMaxNumberOfPlayer = 4 /* for muliplayers */
     
-    let gMinNumberOfPlayer = 1 /* for muliplayers */
+    let gMinNumberOfPlayer = 2 /* for muliplayers */
     
-    let gDefaultNumberOfPlayer = 1 /* for muliplayers */
-    
-    let gUseGameCenter = true
+    let gDefaultNumberOfPlayer = 2 /* for muliplayers */
     
     var gFriendsPlayerList = [GKPlayer]()
     
     var gGameCenterVC = GKGameCenterViewController()
+    
+    var gCurrentMatchRequest = GKMatchRequest()
     
     var gMultiplayerStatus = gMultiplayerOption.standardGameCenterInterface
     
@@ -122,11 +122,15 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 })
             } else if GKLocalPlayer.localPlayer().authenticated == true && self.playerIsAuthenticated == false {
 
+                    self.gGameCenterVC.gameCenterDelegate = self
+                
                     /* authenticated once and is authenticated and prepare GKLocalPlayer.localPlayer() object*/
                     self.debug("DEBUG: game center authentication ok" + String(GKLocalPlayer.localPlayer().playerID))
                 
                     /* attempt to set up event handler*/
                     // self.setUpInviteHandler()
+                
+                    self.rearrangeDisplayedItems()
                 
                     self.playerIsAuthenticated = true
                 
@@ -158,11 +162,13 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 
             } else  {
                 /* cannot authenticate local user*/
+                self.gGameCenterVC.gameCenterDelegate = self
                 self.playerIsAuthenticated = false
                 self.debug("DEBUG: cannot authenticate user 怎麼辦")
             }
             if gameCenterError != nil {
                 /*there is an error from game center*/
+                self.gGameCenterVC.gameCenterDelegate = self
                 self.playerIsAuthenticated = false
                 self.debug("DEBUG: Game Center error: \(gameCenterError)")
             }
@@ -177,22 +183,25 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     func createAndSendMatchRequest() {
         
         if playerIsAuthenticated == true {
+
             let gMatchRequest:GKMatchRequest = GKMatchRequest()
+            
             
             gMatchRequest.maxPlayers = gMaxNumberOfPlayer
             gMatchRequest.minPlayers = gMinNumberOfPlayer
             gMatchRequest.defaultNumberOfPlayers = gDefaultNumberOfPlayer
             gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
             gMatchRequest.recipients = gFriendsPlayerList
+            GKMatchType.PeerToPeer
             gMatchRequest.recipientResponseHandler = { (playerID, response) -> Void in
                 if response ==  GKInviteRecipientResponse.InviteeResponseAccepted {
                     self.debug("DEBUG: match sent accepted")
-                    self.startMatch()
+
                 }
             }
             
             if gMultiplayerStatus == .standardGameCenterInterface {
-                /* option 1 game center standard interface */
+                /* OPTION 1 game center standard interface */
                 
                 /*initializing a Game Center Match Maker View Controller for users to customize*/
                 let matchMakerViewController = GKMatchmakerViewController(matchRequest: gMatchRequest)! /* initWithMatchRequest: */
@@ -205,9 +214,10 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                     self.debug("DEBUG: Standard Match Maker VC presented")
                 })
             } else if gMultiplayerStatus == .programmeToCreateMatch {
-                /* option 2 programmatically find match */
                 
-                self.debug("DEBUG: attempt to create match programmatically")
+                /* OPTION 2 programmatically find peer to peer real time match */
+                
+                self.debug("DEBUG: attempt to create  match programmatically")
                 GKMatchmaker.sharedMatchmaker().findMatchForRequest(gMatchRequest, withCompletionHandler: { (match, error) -> Void in
                     if !(error != nil) {
                         self.debug("DEBUG: There is an error" + String(error))
@@ -223,7 +233,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
 
 
             } else if gMultiplayerStatus == .programmeInviteSpecificPlayers {
-                /* option 3 invite specific player */
+                /* OPTION 3 invite specific player for  peer to peer real time match*/
                 
                 gMatchRequest.recipients = gFriendsPlayerList
                 
@@ -264,9 +274,10 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
         /*
         If your game uses programmatic matchmaking, it makes a series of calls to the findMatchForRequest:withCompletionHandler: and addPlayersToMatch:matchRequest:completionHandler: methods to fill a match with players. When the match has the proper number of players, call thefinishMatchmakingForMatch: method before starting the match.
         */
-        
+        self.startMatch(match)
     }
     
+    /**************************************** STEP 2: INVITE HANDLER ??? ****************************************/
     
     /*************************** NEW VERSION OF INVITE GKLocalPlayerListener PROTOCOL  ****************************/
 
@@ -275,38 +286,48 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     func player(player: GKPlayer, didAcceptInvite invite: GKInvite) {
         self.debug("did received and accepted an invite" + String(player.playerID))
         
-        GKMatchmaker.sharedMatchmaker().matchForInvite(invite, completionHandler: { match, error -> Void in
-            self.debug("Invite received")
-
-            let alert = UIAlertController(title: "Game Invitation", message: "Message", preferredStyle: UIAlertControllerStyle.Alert)
-            let alertAction1 = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-            let alertAction2 = UIAlertAction(title: "No la", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-            alert.addAction(alertAction1)
-            alert.addAction(alertAction2)
-            self.presentViewController(alert, animated: true) { () -> Void in }
-            
+        let matchMakerViewController = GKMatchmakerViewController(invite: invite)!
+        
+        matchMakerViewController.hosted = false
+        matchMakerViewController.matchmakerDelegate = self  /*to followup on the response from other players unpon receiving my invitations sent*/
+        
+        
+        self.presentViewController(matchMakerViewController, animated: true, completion: {() -> Void in
+            self.debug("DEBUG: standard GC UI presented with Invite")
         })
+        
+//        GKMatchmaker.sharedMatchmaker().matchForInvite(invite, completionHandler: { match, error -> Void in
+//            self.debug("Invite received")
+//
+//            let alert = UIAlertController(title: "Game Invitation", message: "Message", preferredStyle: UIAlertControllerStyle.Alert)
+//            let alertAction1 = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+//                self.startMatch(match!)
+//            
+//            }
+//            let alertAction2 = UIAlertAction(title: "No la", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+//            alert.addAction(alertAction1)
+//            alert.addAction(alertAction2)
+//            self.presentViewController(alert, animated: true) { () -> Void in }
+//            
+//            
+//            
+//        })
         
 
     }
     
     
+    func player(player: GKPlayer, didRequestMatchWithRecipients recipientPlayers: [GKPlayer]) {
+        print("player function called")
     
-    func player(player: GKPlayer, didRequestMatchWithRecipients playerIDsToInvite: [GKPlayer]) {
-        print("DEBUG: player send Invite with specific ID")
-        
-        let gMatchRequest:GKMatchRequest = GKMatchRequest()
-        
-        gMatchRequest.maxPlayers = gMaxNumberOfPlayer
-        gMatchRequest.minPlayers = gMinNumberOfPlayer
-        gMatchRequest.defaultNumberOfPlayers = gDefaultNumberOfPlayer
-        gMatchRequest.playerAttributes = 0 ; // NO SPECIAL ATTRIBS
-        gMatchRequest.playerGroup = 0
-        gMatchRequest.inviteMessage = "Let's Play Draw and Guess la 哇卡！"
-        gMatchRequest.recipients = playerIDsToInvite
-        
-
+    }
     
+    func player(player: GKPlayer, didReceiveChallenge challenge: GKChallenge) {
+        
+    }
+    
+    func player(player: GKPlayer, wantsToPlayChallenge challenge: GKChallenge) {
+        
     }
     
     /********************* For MatchmakerController Delegate ***************************/
@@ -314,12 +335,13 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
         self.debug("DEBUG: game center interaction is done")
+        self.rearrangeDisplayedItems()
     }
     /* * */
     
     func matchmakerViewController(viewController: GKMatchmakerViewController,
         didFailWithError error: NSError) {
-            self.debug("matchmakerViewController")
+            self.debug("MatchView Controller error: " +  String(error))
     }
     
 //    func matchmakerViewController(_ viewController: GKMatchmakerViewController!,
@@ -329,68 +351,11 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     func matchmakerViewControllerWasCancelled(viewController: GKMatchmakerViewController) {
         viewController.dismissViewControllerAnimated(true, completion: {() -> Void in
             self.debug("matchmakerViewController closed as user cancelled it")
+            self.rearrangeDisplayedItems()
         })
     }
     
-
-    
-    
-    func startMatch() {
-        
-    }
-    
-    /********************************** CORE *********************************/
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        /* Make sure layout of buttons are ok before loading the view */
-        statusLabel.frame.origin.x = self.view.frame.size.width/2 - statusLabel.frame.width/2
-        buttonForAutoMatch.frame.origin.x = self.view.frame.size.width/2 - buttonForAutoMatch.frame.width/2
-        buttonForGameCenter.frame.origin.x = self.view.frame.size.width/2 - buttonForGameCenter.frame.width/2
-        buttonForSpecificPlayers.frame.origin.x = self.view.frame.size.width/2 - buttonForSpecificPlayers.frame.width/2
-        greenButton.frame.origin.x = self.view.frame.size.width/2 - greenButton.frame.width/2
-        
-        print("DEBUG: viewDidAppear - readjust position of buttons")
-        
-        authenticatePlayer()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        /* viewWillLayoutSubviews is where you position and layout the subviews if needed. This will be called after rotations or other events results in the view controller's view being sized. This can happen many times in the lifetime of the view controller.  */
-        if !mainMenuAlreadyLoadedOnce {
-            super.viewWillLayoutSubviews()
-            mainMenuAlreadyLoadedOnce = true
-            print("DEBUG: viewWillLayoutSubviews")
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        print("Did receive memory warning")
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    //    func matchmakerViewController(viewController: GKMatchmakerViewController!,
-    //        didFindHostedPlayers players: [AnyObject]!) {
-    //
-    //    }
+    /********************************** For GKMatchDelegate *********************************/
     
     func match(match: GKMatch, didReceiveData data: NSData, fromRemotePlayer player: GKPlayer) {
         print("receiving data from another player")
@@ -400,20 +365,89 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
         print("player state changed")
     }
     
-    /*********** Implementation for GKLocalPlayerListener *********************/
+    /************************************* The Match Logic ******************************/
 
-    
-    func player(player: GKPlayer, didReceiveChallenge challenge: GKChallenge) {
+    func randomizePlayerArray(var arr: [GKPlayer]) -> [GKPlayer] {
+        
+        var randomizedPlayerResultArray = [GKPlayer]()
+        
+        if (arr.count > 0) {
+            let tmp:GKPlayer  = arr.removeAtIndex(Int(arc4random_uniform(UInt32(arr.count))))
+            randomizedPlayerResultArray.append(tmp)
+            randomizePlayerArray(arr)
+        }
+        return randomizedPlayerResultArray
         
     }
     
-    func player(player: GKPlayer, wantsToPlayChallenge challenge: GKChallenge) {
+    func startMatch(match: GKMatch) {
+        /*preparation*/
+        var allPlayersArray = [GKPlayer]()
+        allPlayersArray = match.players
+        let data = NSData(base64EncodedString: "hello", options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
         
+        do {
+            try match.sendData(data!, toPlayers: allPlayersArray, dataMode: GKMatchSendDataMode.Reliable)
+        } catch {
+            debug("cannot send data")
+        }
+        
+        /* randomize players*/
+        allPlayersArray = randomizePlayerArray(allPlayersArray)
+        
+        
+
+            
+        /* explain how to play and start? */
+        /* Go to the randomize role view */
+        /* randomize question and display to both drawer and guesser */
+    }
+    
+
+    
+    /********************************** CORE *********************************/
+    
+    func rearrangeDisplayedItems() {
+        /* Make sure layout of buttons are ok before loading the view */
+        statusLabel.frame.origin.x = self.view.frame.size.width/2 - statusLabel.frame.width/2
+        buttonForAutoMatch.frame.origin.x = self.view.frame.size.width/2 - buttonForAutoMatch.frame.width/2
+        buttonForGameCenter.frame.origin.x = self.view.frame.size.width/2 - buttonForGameCenter.frame.width/2
+        buttonForSpecificPlayers.frame.origin.x = self.view.frame.size.width/2 - buttonForSpecificPlayers.frame.width/2
+        greenButton.frame.origin.x = self.view.frame.size.width/2 - greenButton.frame.width/2
+        print("DEBUG: viewDidAppear - readjust position of buttons")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        debug("viewDidLoad")
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        debug("ViewDidAppear")
 
+        rearrangeDisplayedItems()
+        
+        authenticatePlayer()
+    }
     
-
+    override func viewWillLayoutSubviews() {
+        /* viewWillLayoutSubviews is where you position and layout the subviews if needed. This will be called after rotations or other events results in the view controller's view being sized. This can happen many times in the lifetime of the view controller.  */
+        
+        debug("viewWillLayoutSubviews")
+        if !mainMenuAlreadyLoadedOnce {
+            super.viewWillLayoutSubviews()
+            mainMenuAlreadyLoadedOnce = true
+        }
+    }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("Did receive memory warning")
+        // Dispose of any resources that can be recreated.
+    }
+    
+   
 
 }

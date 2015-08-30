@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7E0651321B87613100635FA0 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651311B87613100635FA0 /* GameController.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		7E0651341B87613900635FA0 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651331B87613900635FA0 /* GameplayKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7E0651341B87613900635FA0 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651331B87613900635FA0 /* GameplayKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7E0A40FF1B807D32002F2CB4 /* ColorPalette.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0A40FE1B807D32002F2CB4 /* ColorPalette.png */; };
-		7E21330B1B86DB0400DA6659 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E21330A1B86DB0400DA6659 /* Default-568h@2x.png */; };
+		7E1A3B271B931156005B8293 /* blueIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B231B931156005B8293 /* blueIcon.png */; settings = {ASSET_TAGS = (); }; };
+		7E1A3B281B931156005B8293 /* redIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B241B931156005B8293 /* redIcon.png */; settings = {ASSET_TAGS = (); }; };
+		7E1A3B291B931156005B8293 /* purpleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B251B931156005B8293 /* purpleIcon.png */; settings = {ASSET_TAGS = (); }; };
+		7E1A3B2A1B931156005B8293 /* greenIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B261B931156005B8293 /* greenIcon.png */; settings = {ASSET_TAGS = (); }; };
 		7E2A03391B86D3EB00C5531A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2A03381B86D3EB00C5531A /* GameKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7E83DFEF1B79509B00586FDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83DFEE1B79509B00586FDF /* AppDelegate.swift */; };
 		7E83DFF11B79509B00586FDF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7E83DFF01B79509B00586FDF /* GameScene.sks */; };
@@ -39,7 +42,10 @@
 		7E0651311B87613100635FA0 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		7E0651331B87613900635FA0 /* GameplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameplayKit.framework; path = System/Library/Frameworks/GameplayKit.framework; sourceTree = SDKROOT; };
 		7E0A40FE1B807D32002F2CB4 /* ColorPalette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ColorPalette.png; sourceTree = "<group>"; };
-		7E21330A1B86DB0400DA6659 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		7E1A3B231B931156005B8293 /* blueIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueIcon.png; sourceTree = "<group>"; };
+		7E1A3B241B931156005B8293 /* redIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redIcon.png; sourceTree = "<group>"; };
+		7E1A3B251B931156005B8293 /* purpleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purpleIcon.png; sourceTree = "<group>"; };
+		7E1A3B261B931156005B8293 /* greenIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenIcon.png; sourceTree = "<group>"; };
 		7E2A03381B86D3EB00C5531A /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		7E83DFEB1B79509B00586FDF /* DrawAndGuess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawAndGuess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E83DFEE1B79509B00586FDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +116,10 @@
 				7E83DFF41B79509B00586FDF /* DrawViewController.swift */,
 				7E83DFF61B79509B00586FDF /* Main.storyboard */,
 				7E83DFF91B79509B00586FDF /* Assets.xcassets */,
+				7E1A3B231B931156005B8293 /* blueIcon.png */,
+				7E1A3B241B931156005B8293 /* redIcon.png */,
+				7E1A3B251B931156005B8293 /* purpleIcon.png */,
+				7E1A3B261B931156005B8293 /* greenIcon.png */,
 				7E0A40FE1B807D32002F2CB4 /* ColorPalette.png */,
 				7E83DFFE1B79509B00586FDF /* Info.plist */,
 				7EAF1FD51B8128E800C9CA92 /* black.png */,
@@ -123,7 +133,6 @@
 				7EAF1FDC1B8128E800C9CA92 /* pink.png */,
 				7EAF1FDD1B8128E800C9CA92 /* magenta.png */,
 				7EAF1FDE1B8128E800C9CA92 /* red.png */,
-				7E21330A1B86DB0400DA6659 /* Default-568h@2x.png */,
 				7EF2AB871B878DE600A8ADEB /* greenButton.png */,
 				7EF2AB881B878DE600A8ADEB /* redButton.png */,
 			);
@@ -198,20 +207,23 @@
 				7EAF1FE01B8128E800C9CA92 /* black.png in Resources */,
 				7E0A40FF1B807D32002F2CB4 /* ColorPalette.png in Resources */,
 				7EAF1FE91B8128E800C9CA92 /* red.png in Resources */,
+				7E1A3B281B931156005B8293 /* redIcon.png in Resources */,
 				7EAF1FE81B8128E800C9CA92 /* magenta.png in Resources */,
 				7EAF1FE51B8128E800C9CA92 /* orange.png in Resources */,
 				7EAF1FE61B8128E800C9CA92 /* lightblue.png in Resources */,
 				7EAF1FE21B8128E800C9CA92 /* darkblue.png in Resources */,
+				7E1A3B291B931156005B8293 /* purpleIcon.png in Resources */,
 				7EAF1FEB1B8129E900C9CA92 /* yellow.png in Resources */,
 				7EF2AB891B878DE600A8ADEB /* greenButton.png in Resources */,
+				7E1A3B271B931156005B8293 /* blueIcon.png in Resources */,
 				7EAF1FDF1B8128E800C9CA92 /* green.png in Resources */,
 				7EF2AB8A1B878DE600A8ADEB /* redButton.png in Resources */,
 				7EAF1FE71B8128E800C9CA92 /* pink.png in Resources */,
 				7EAF1FE41B8128E800C9CA92 /* blue.png in Resources */,
 				7EAF1FE31B8128E800C9CA92 /* darkgreen.png in Resources */,
-				7E21330B1B86DB0400DA6659 /* Default-568h@2x.png in Resources */,
 				7E83DFFA1B79509B00586FDF /* Assets.xcassets in Resources */,
 				7E83DFF81B79509B00586FDF /* Main.storyboard in Resources */,
+				7E1A3B2A1B931156005B8293 /* greenIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
