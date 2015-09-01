@@ -40,7 +40,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     var gFriendsPlayerList = [GKPlayer]()
     
-    var gGameCenterVC = GKGameCenterViewController()
+//    var gGameCenterVC = GKGameCenterViewController()
     
     var gCurrentMatchRequest = GKMatchRequest()
     
@@ -79,6 +79,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     @IBOutlet var buttonForAutoMatch: UIButton!
     @IBOutlet var buttonForSpecificPlayers: UIButton!
     @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var statusTextView: UITextView!
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
 
@@ -96,7 +97,15 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     func debug(str: String) {
         print("DEBUG: " + str)
-        statusLabel.text = str
+        
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1.0))
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.statusTextView.text = self.statusTextView.text! + "\n" + str
+            self.statusTextView.setNeedsDisplay()
+            let btm:NSRange = NSMakeRange(self.statusTextView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) - 1, 1)
+            self.statusTextView.scrollRangeToVisible(btm)
+        })
     }
     
     /************************** STEP 1: PLAYER AUTHENTICATION ****************************/
@@ -105,6 +114,9 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     func authenticatePlayer() {
         /* Game initial settings set up as well as ask users to login to Game Center */
+        debug("authenticating player...")
+        
+        var gGameCenterVC = GKGameCenterViewController()
         
         /*GKLocalPlayer Singleton handler implementation*/
         GKLocalPlayer.localPlayer().authenticateHandler = {( gameCenterVC, gameCenterError) -> Void in
@@ -113,16 +125,15 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
             if gameCenterVC != nil {
                 /* present GameCenterVC and ask users to login */
                 
-                //self.gGameCenterVC = gameCenterVC as! GKGameCenterViewController
-                self.gGameCenterVC.gameCenterDelegate = self
+                gGameCenterVC = gameCenterVC as! GKGameCenterViewController
+                gGameCenterVC.gameCenterDelegate = self
                 
                 self.presentViewController(gameCenterVC!, animated: true, completion: { () -> Void in
                     /* present game login screen to users*/
                     self.debug("DEBUG: No login cookie, prompt user to login")
                 })
             } else if GKLocalPlayer.localPlayer().authenticated == true && self.playerIsAuthenticated == false {
-
-                    self.gGameCenterVC.gameCenterDelegate = self
+                
                 
                     /* authenticated once and is authenticated and prepare GKLocalPlayer.localPlayer() object*/
                     self.debug("DEBUG: game center authentication ok" + String(GKLocalPlayer.localPlayer().playerID))
@@ -156,19 +167,13 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 })
                 
                 
-                    /* take action to creat a new match for user */
-                
-                    // self.player(GKLocalPlayer.localPlayer(), didRequestMatchWithPlayers: ["G:17880138"])
-                
             } else  {
                 /* cannot authenticate local user*/
-                self.gGameCenterVC.gameCenterDelegate = self
                 self.playerIsAuthenticated = false
                 self.debug("DEBUG: cannot authenticate user 怎麼辦")
             }
             if gameCenterError != nil {
                 /*there is an error from game center*/
-                self.gGameCenterVC.gameCenterDelegate = self
                 self.playerIsAuthenticated = false
                 self.debug("DEBUG: Game Center error: \(gameCenterError)")
             }
@@ -196,6 +201,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
             gMatchRequest.recipientResponseHandler = { (playerID, response) -> Void in
                 if response ==  GKInviteRecipientResponse.InviteeResponseAccepted {
                     self.debug("DEBUG: match sent accepted")
+                    /* more work here*/
 
                 }
             }
@@ -219,7 +225,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                 
                 self.debug("DEBUG: attempt to create  match programmatically")
                 GKMatchmaker.sharedMatchmaker().findMatchForRequest(gMatchRequest, withCompletionHandler: { (match, error) -> Void in
-                    if !(error != nil) {
+                    if (error != nil) {
                         self.debug("DEBUG: There is an error" + String(error))
                     } else if match != nil {
                         /* Match created now add more players */
@@ -332,6 +338,11 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     /********************* For MatchmakerController Delegate ***************************/
     
+    func matchmakerViewController(viewController: GKMatchmakerViewController, didFindMatch match: GKMatch) {
+            debug("did find match")
+    }
+    
+    
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
         self.debug("DEBUG: game center interaction is done")
@@ -359,6 +370,10 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     
     func match(match: GKMatch, didReceiveData data: NSData, fromRemotePlayer player: GKPlayer) {
         print("receiving data from another player")
+    }
+    
+    func match(match: GKMatch, shouldReinviteDisconnectedPlayer player: GKPlayer) -> Bool {
+        return true
     }
     
     func match(match: GKMatch, player: GKPlayer, didChangeConnectionState state: GKPlayerConnectionState) {
@@ -435,7 +450,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     override func viewWillLayoutSubviews() {
         /* viewWillLayoutSubviews is where you position and layout the subviews if needed. This will be called after rotations or other events results in the view controller's view being sized. This can happen many times in the lifetime of the view controller.  */
         
-        debug("viewWillLayoutSubviews")
+        // debug("viewWillLayoutSubviews")
         if !mainMenuAlreadyLoadedOnce {
             super.viewWillLayoutSubviews()
             mainMenuAlreadyLoadedOnce = true
