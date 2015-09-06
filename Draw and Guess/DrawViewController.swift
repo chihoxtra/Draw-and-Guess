@@ -37,8 +37,7 @@ class GameViewController: UIViewController {
     let gDefaultNumberOfPlayer = 2 /* for muliplayers */
 
     var gGameCenterVC = GKGameCenterViewController()
-//    
-//    let gInvite = GKInvite()
+
 
     @IBOutlet weak var timerLabel: UILabel!
     

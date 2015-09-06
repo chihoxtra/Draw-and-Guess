@@ -31,13 +31,16 @@ class GuessViewController: UIViewController {
     func submitNewGuess(ans: String) {
         if ans != "" {
             
-            guessList.text = guessList.text + "\n" + getCurrentTimeStamp() + ":" + ans
+            NSRunLoop.mainRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1.0))
             
-            let range:NSRange = NSMakeRange(guessList.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) - 1, 1)
-            guessList.scrollRangeToVisible(range)
-            print(range)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.guessList.text = self.guessList.text + "\n" + self.getCurrentTimeStamp() + ":" + ans
+                self.guessList.setNeedsDisplay()
+                let btm:NSRange = NSMakeRange(self.guessList.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) - 1, 1)
+                self.guessList.scrollRangeToVisible(btm)
+                self.myGuess.text = ""
+            })
             
-            myGuess.text = ""
 
         }
     }

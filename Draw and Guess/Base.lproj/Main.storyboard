@@ -40,6 +40,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="greenButton:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="6XM-pQ-vvd"/>
+                                    <segue destination="GwG-vg-arJ" kind="show" identifier="showGuessControllerMultiPlayer" id="xnG-xm-FZ4"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StatusLabel" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfs-gA-R0A">
@@ -63,6 +64,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="buttonForAutoMatch:" destination="54U-Zw-Ntw" eventType="touchUpInside" id="r2W-Xx-8Ko"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" identifier="showDrawControllerMultiPlayer" id="Nvg-0b-FwR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBT-Wg-x8m">
@@ -306,7 +308,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2054" y="381"/>
+            <point key="canvasLocation" x="2065.5" y="703.5"/>
         </scene>
         <!--Guess View Controller-->
         <scene sceneID="UY3-12-OJe">
@@ -340,13 +342,13 @@
                                     <action selector="sumitButton:" destination="GwG-vg-arJ" eventType="touchUpInside" id="oHt-dn-Xzv"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cb8-oN-aSP">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" bounces="NO" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cb8-oN-aSP">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.82046469060000005" green="0.92626167510000001" blue="0.99429481909999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text">1234567890
 1234567890</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="32" y="305" width="311" height="95"/>
                                 </variation>
