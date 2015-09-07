@@ -14,8 +14,6 @@ import GameplayKit
 /*
 Notes:
 Do not implement GKInviteEventListener directly, instead use GKLocalPlayerListener. The GKLocalPlayerListener protocol inherits methods from GKInviteEventListener, GKChallengeListener, and GKTurnBasedEventListener in order to handle multiple events.
-
-
 */
 
 class CurrentGameProfile: NSObject {
@@ -23,6 +21,10 @@ class CurrentGameProfile: NSObject {
     var playerObjRef:GKPlayer
     var myRole:gRoleOfPlayerOption
     var myScore:Int = 0
+    var playerGuessAnsToQuestion: answerToQuestion = answerToQuestion.correct
+    var correctAns:Int = 0
+    var wrongAns:Int = 0
+    var pictureDrawn = 0
     var isConnnected:Bool
     
     enum gRoleOfPlayerOption {
@@ -30,11 +32,28 @@ class CurrentGameProfile: NSObject {
         case roleGuesser
     }
     
+    enum answerToQuestion {
+        case correct
+        case inCorrect
+    }
+    
     init(player: GKPlayer, role: gRoleOfPlayerOption, connectionStatus: Bool) {
         playerObjRef = player
         myRole = role
         isConnnected = connectionStatus
         
+    }
+    
+    func aQuestionIsDone(ansStatus: answerToQuestion) {
+        if myRole == gRoleOfPlayerOption.roleGuesser {
+            if ansStatus == answerToQuestion.correct {
+                correctAns += 1
+            } else {
+                wrongAns += 1
+            }
+        } else if myRole == gRoleOfPlayerOption.roleDrawer {
+            
+        }
     }
 
 }
@@ -58,6 +77,8 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
     let gMinNumberOfPlayer = 2 /* for muliplayers */
     
     let gDefaultNumberOfPlayer = 2 /* for muliplayers */
+    
+    let gTotalNumberOfPicToBeDrawnPerRound = 5 /* number of pictures each player need to draw per round */
     
     var gMyFriendsPlayerList = [GKPlayer]()
     
