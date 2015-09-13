@@ -10,10 +10,10 @@
 		7E0651321B87613100635FA0 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651311B87613100635FA0 /* GameController.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7E0651341B87613900635FA0 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0651331B87613900635FA0 /* GameplayKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7E0A40FF1B807D32002F2CB4 /* ColorPalette.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0A40FE1B807D32002F2CB4 /* ColorPalette.png */; };
-		7E1A3B271B931156005B8293 /* blueIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B231B931156005B8293 /* blueIcon.png */; settings = {ASSET_TAGS = (); }; };
-		7E1A3B281B931156005B8293 /* redIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B241B931156005B8293 /* redIcon.png */; settings = {ASSET_TAGS = (); }; };
-		7E1A3B291B931156005B8293 /* purpleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B251B931156005B8293 /* purpleIcon.png */; settings = {ASSET_TAGS = (); }; };
-		7E1A3B2A1B931156005B8293 /* greenIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B261B931156005B8293 /* greenIcon.png */; settings = {ASSET_TAGS = (); }; };
+		7E1A3B271B931156005B8293 /* blueIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B231B931156005B8293 /* blueIcon.png */; };
+		7E1A3B281B931156005B8293 /* redIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B241B931156005B8293 /* redIcon.png */; };
+		7E1A3B291B931156005B8293 /* purpleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B251B931156005B8293 /* purpleIcon.png */; };
+		7E1A3B2A1B931156005B8293 /* greenIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A3B261B931156005B8293 /* greenIcon.png */; };
 		7E2A03391B86D3EB00C5531A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2A03381B86D3EB00C5531A /* GameKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7E83DFEF1B79509B00586FDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83DFEE1B79509B00586FDF /* AppDelegate.swift */; };
 		7E83DFF11B79509B00586FDF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7E83DFF01B79509B00586FDF /* GameScene.sks */; };
@@ -166,6 +166,7 @@
 		7E83DFE31B79509B00586FDF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Samuel Pun";
 				TargetAttributes = {

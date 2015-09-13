@@ -157,7 +157,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
         /* Game initial settings set up as well as ask users to login to Game Center */
         debug("authenticating player...")
         
-        var gGameCenterVC = GKGameCenterViewController()
+        let gGameCenterVC = GKGameCenterViewController()
         
         /*GKLocalPlayer Singleton handler implementation*/
         GKLocalPlayer.localPlayer().authenticateHandler = {( gameCenterVC, gameCenterError) -> Void in
@@ -166,18 +166,18 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
             if gameCenterVC != nil {
                 /* present GameCenterVC and ask users to login */
                 
-                gGameCenterVC = gameCenterVC as! GKGameCenterViewController
+                // gGameCenterVC = gameCenterVC as! GKGameCenterViewController
                 gGameCenterVC.gameCenterDelegate = self
                 
                 self.presentViewController(gameCenterVC!, animated: true, completion: { () -> Void in
                     /* present game login screen to users*/
-                    self.debug("DEBUG: No login cookie, prompt user to login")
+                    self.debug("No login cookie, prompt user to login")
                 })
             } else if GKLocalPlayer.localPlayer().authenticated == true && self.playerIsAuthenticated == false {
                 
                 
                     /* authenticated once and is authenticated and prepare GKLocalPlayer.localPlayer() object*/
-                    self.debug("DEBUG: game center authentication ok" + String(GKLocalPlayer.localPlayer().playerID))
+                    self.debug("game center authentication ok" + String(GKLocalPlayer.localPlayer().playerID))
                 
                     /* attempt to set up event handler*/
                     // self.setUpInviteHandler()
@@ -199,11 +199,11 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
                     if playerlist != nil {
                         for player in playerlist! {
                             self.gMyFriendsPlayerList.append(player)
-                            self.debug("DEBUG: player's friend retrieved: " + String(player))
+                            self.debug("player's friend retrieved: " + String(player))
                         }
                     }
                     if err != nil {
-                        self.debug("DEBUG: Game Center error: \(err)")
+                        self.debug("Game Center error: \(err)")
                     }
                 })
                 
@@ -211,12 +211,12 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate, 
             } else  {
                 /* cannot authenticate local user*/
                 self.playerIsAuthenticated = false
-                self.debug("DEBUG: cannot authenticate user 怎麼辦")
+                self.debug("cannot authenticate user 怎麼辦")
             }
             if gameCenterError != nil {
                 /*there is an error from game center*/
                 self.playerIsAuthenticated = false
-                self.debug("DEBUG: Game Center error: \(gameCenterError)")
+                self.debug("Game Center error: \(gameCenterError)")
             }
         }
     }
